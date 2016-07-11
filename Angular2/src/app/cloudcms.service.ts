@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-var Gitana = require('gitana');
+var Gitana = require('gitana/lib/gitana');
 var Chain = Gitana.Chain;
 
 @Injectable()
@@ -10,22 +10,21 @@ export class CloudCmsService {
     branchId: string;
 
     constructor() {
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
         this.connection = null;
     }
 
-    getNodes() {
-        return new Node();
-    }
+    private getConnection() {
+        var me = this;
 
-    getConnection() {
         return new Promise(function(resolve, reject){
-            if (this.connection)
+            if (me.connection)
             {
-                resolve(this.connection);
+                resolve(me.connection);
                 return;
             }
 
-            this.connect(this.gitanaConfig, this.branchId).then(function (resultArray: Array<any>) {
+            me.connect(me.gitanaConfig, me.branchId).then(function (resultArray: Array<any>) {
                 resolve(resultArray[0]);
             }).catch(function(error: any){
                 reject(error);
@@ -33,9 +32,11 @@ export class CloudCmsService {
         });
     }
 
-    connect(gitanaConfig: string, branchId: string) {
-        this.gitanaConfig = gitanaConfig;
-        this.branchId = branchId;
+    private connect(gitanaConfig: string, branchId: string) {
+        var me = this;
+
+        me.gitanaConfig = gitanaConfig;
+        me.branchId = branchId;
 
         return new Promise(function(resolve, reject){
             Gitana.connect(gitanaConfig, function(err: string) {
@@ -53,14 +54,16 @@ export class CloudCmsService {
                     reject(err);
                 }).then(function () {
                     console.log("Connected: " + JSON.stringify(this));
-                    this.connection = this;
-                    resolve([this.connection]);
+                    me.connection = this;
+                    resolve([me.connection]);
                 })
             })
         });
     }
     
     getNodesById(iDs: Array<string>) {
+        var me = this;
+
         var query = {};
 
         if (Gitana.isArray(iDs))
@@ -75,13 +78,15 @@ export class CloudCmsService {
         }
 
         return new Promise(function(resolve, reject){
-            this.queryNodes(query).then(function(resultArray: Array<any>){
+            me.queryNodes(query).then(function(resultArray: Array<any>){
                 resolve(resultArray);
             });
         });
     }
     
     queryNodes(query: Object) {
+        var me = this;
+
         var nodes: Array<any>;
         if (!query) {
             query = {
@@ -90,7 +95,7 @@ export class CloudCmsService {
         }
 
         return new Promise(function(resolve, reject){
-            this.getConnection().then(function(connection: any) {
+            me.getConnection().then(function(connection: any) {
                 Chain(connection).trap(function(err: any) {
                     reject(err);
                     return;
@@ -98,7 +103,7 @@ export class CloudCmsService {
                 .queryNodes(query, {"limit": 100})
                 .each(function(){
                     var node = this;
-                    this.enhanceNode(node);
+                    CloudCmsService.enhanceNode(node);
                     console.log("queryNodes result " + JSON.stringify(node));
                     nodes.push( JSON.parse(JSON.stringify(node)));
                 }).then(function() {
@@ -109,7 +114,7 @@ export class CloudCmsService {
         });
     }
 
-    private enhanceNode(node: any) {
+    private static enhanceNode(node: any) {
         // add in the "attachments" as a top level property
         // if "attachments" already exists, we'll set to "_attachments"
         var attachments = {};
