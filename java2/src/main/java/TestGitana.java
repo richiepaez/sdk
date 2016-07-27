@@ -9,9 +9,9 @@ import org.gitana.util.JsonUtil;
 public class TestGitana {
     private static final String REPOSITORY_TITLE = "import test 'content' repository";
     private static final ObjectNode repoQuery = QueryBuilder.start(Repository.FIELD_TITLE).is(REPOSITORY_TITLE).get();
-    private final Gitana gitana = new Gitana();
-    private Platform platform = gitana.authenticate();
-    private Repository repository = platform.queryRepositories(repoQuery).asList().get(0);
+    public final Gitana gitana = new Gitana();
+    public Platform platform = gitana.authenticate();
+    public Repository repository = platform.queryRepositories(repoQuery).asList().get(0);
     public Branch master = repository.readBranch("master");
 
     public static ObjectNode createNodeObject(final String title, final String type, final String filePath, final String body) {
