@@ -22,7 +22,7 @@ server.report(function(callback) {
 
     // provide some debug info
     console.log("");
-    console.log("Moen Training App Started Up");
+    console.log("Sample App Started Up");
     console.log("");
     console.log("Node Version: " + process.version);
     console.log("Server Version: " + process.env.CLOUDCMS_APPSERVER_PACKAGE_VERSION);
