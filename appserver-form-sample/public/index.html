@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sample Alpaca Registration Form</title>
+
+    <!-- alpaca forms -->
+    <script src="/_lib/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/_lib/vendor/handlebars/handlebars.min.js"></script>
+    <script src="/_lib/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/_lib/vendor/bootstrap/dist/css/bootstrap.min.css"/>
+    <script src="_lib/alpaca/alpaca.js"></script>
+    <link rel="stylesheet" href="_lib/alpaca/alpaca.min.css"/>
+
+    <!-- Sample Application -->
+    <link rel="stylesheet" href="css/sample.css"/>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        {@form definition="custom:registration" form="master" list="registrations" success="/thankyou.html" error="/index.html"}{/form}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
