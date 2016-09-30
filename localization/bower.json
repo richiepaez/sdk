@@ -1,0 +1,10 @@
+{
+    "name": "cloudcms-localization-sample",
+    "private": true,
+    "version": "0.0.1",
+    "dependencies": {
+        "bootstrap": "3.3.2",
+        "handlebars": "4.0.5",
+        "jquery": ">= 2.1.0"
+    }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Localization Sample</title>
+
+    <!-- libraries -->
+    <script src="/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/vendor/handlebars/handlebars.min.js"></script>
+    <script src="/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/vendor/bootstrap/dist/css/bootstrap.min.css"/>
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br/>
+
+                <a href="/index.html?locale=en_US" class="btn btn-default">
+                    <img src="images/flag-english.png" style="width:32px">Show in English
+                </a>
+                <a href="/index.html?locale=zh_CN" class="btn btn-default">
+                    <img src="images/flag-chinese.png" style="width:32px">
+                    Show in Chinese
+                </a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <!-- find the guide:city near boston -->
+                {@queryOne type="guide:city" near="42.3584308,-71.0597732" locale="{request.qs.locale}"}
+                <div>
+                    <h3>{title}</h3>
+                    <p>{headline}</p>
+                    <p>{body}</p>
+                </div>
+                {/queryOne}
+
+                <!-- find the guide:city near london -->
+                {@queryOne type="guide:city" near="38.8993487,-77.0145665" locale="{request.qs.locale}"}
+                <div>
+                    <h3>{title}</h3>
+                    <p>{headline}</p>
+                    <p>{body}</p>
+                </div>
+                {/queryOne}
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

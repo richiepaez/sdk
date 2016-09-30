@@ -19,6 +19,8 @@ build/
 # 3rd-party / dependency files
 vendor/
 */vendor/
+vendor
+
 
 # don't check in gitana.json files
 gitana.json
