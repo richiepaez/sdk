@@ -11,13 +11,13 @@ PASSWORD=
 # plug in your node information here
 REPOSITORY_ID=
 BRANCH_ID=master
-NODE_ID=
 
 # request the access token
 ACCESS_TOKEN_REQUEST_RESPONSE=$(curl -X POST -u "$CLIENT_KEY:$CLIENT_SECRET" --data-urlencode "grant_type=password" --data-urlencode "username=$USERNAME" --data-urlencode "password=$PASSWORD" "$BASE_URL/oauth/token")
 ACCESS_TOKEN=$(echo $ACCESS_TOKEN_REQUEST_RESPONSE | jq -r '.access_token')
 
-# download node attachment to file
-curl --output "default.jpg" -X GET -H "Content-Type: application/json" -H "Authorization: bearer $ACCESS_TOKEN" "$BASE_URL/repositories/$REPOSITORY_ID/branches/$BRANCH_ID/nodes/$NODE_ID/attachments/default"
+# upload two binary files in a single multi-part call
+# each binary is image/jpeg and will become the default attachment of a new node of type "n:node"
+curl -X POST -H "Content-Type: multipart/form-data" -H "Authorization: bearer $ACCESS_TOKEN" -F "image1=@assets/burns.jpg" -F "image2=@assets/miyagi.jpg" "$BASE_URL/repositories/$REPOSITORY_ID/branches/$BRANCH_ID/nodes"
 echo
 
