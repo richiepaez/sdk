@@ -9,9 +9,9 @@ USERNAME=
 PASSWORD=
 
 # plug in your node information here
-REPOSITORY_ID=ff99bf3fbd1f960af958
+REPOSITORY_ID=
 BRANCH_ID=master
-NODE_ID=56d78bfd2c0731ae2542
+NODE_ID=
 
 # request the access token
 ACCESS_TOKEN_REQUEST_RESPONSE=$(curl -X POST -u "$CLIENT_KEY:$CLIENT_SECRET" --data-urlencode "grant_type=password" --data-urlencode "username=$USERNAME" --data-urlencode "password=$PASSWORD" "$BASE_URL/oauth/token")
